@@ -5,7 +5,7 @@
       <excludeFolder url="file://$MODULE_DIR$/venv-2" />
       <excludeFolder url="file://$MODULE_DIR$/venv-3" />
     </content>
-    <orderEntry type="jdk" jdkName="Python 3.6 (ohm)" jdkType="Python SDK" />
+    <orderEntry type="jdk" jdkName="Python 3.6 (ohm-3)" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
   </component>
   <component name="TemplatesService">

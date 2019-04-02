@@ -1,7 +1,7 @@
 [access-db]
 host = localhost
-password = root
-user = root
+password = 123456789
+user = osboxes
 port = 3306
 database = ohm_assessment
 
