@@ -1,0 +1,167 @@
+{% extends "base_map.html" %}
+
+{% block head %}
+    <link rel="stylesheet" type="text/css" href="/css/webflow_base.css">
+
+    <style>
+        html, body {
+            background-color: #f1f1f2;
+            font-size: 18px;
+            line-height: 1;
+        }
+
+        body, p, h1, h2, h3, h4, h5, h6 {
+            font-family: "Open Sans", sans-serif;
+            color: #808284;
+        }
+
+        .container {
+            font-family: "Open Sans", sans-serif;
+            font-size: 18px;
+            font-weight: 300;
+            color: #808284;
+            padding-top: 50px;
+            background: #f1f1f2;
+            padding-bottom: 50px;
+        }
+
+        #dashboard-top-spacer {
+            height: 25px;
+        }
+
+        #referrals .leaderboard_points {
+            margin-top: 5px;
+        }
+
+        .well { height: 380px; overflow: hidden; }
+
+        .dashboard-tip-spot {
+            position: absolute;
+            z-index: 50;
+            bottom: 30px;
+            right: 20px;
+            height: 26px;
+            width: 26px;
+            margin-top: 0px;
+            padding-top: 3px;
+            border-radius: 13px;
+            text-align: center;
+            background-color: #E6E7E8;
+            color: #A7A9AB;
+        }
+
+        @media (max-width: 768px) {
+          .dashboard-tip-spot { bottom: 10px; }
+        }
+
+        .dashboard-tip-spot-content {
+            display: none;
+        }
+
+        .warning-button {
+            display: block;
+            margin-top: 10px;
+            margin-right: auto;
+            margin-left: auto;
+            border: 1px solid #47bccc;
+            border-radius: 5px;
+            background-color: #47c1d2;
+            font-family: 'Open Sans', sans-serif;
+            font-weight: 300;
+            font-size: 14px;
+            text-align: center;
+        }
+
+        .align-middle {
+            vertical-align: middle !important;
+        }
+
+        .tier-ball-small {
+            width: 13px;
+            height: 13px;
+            float: left;
+            margin-right: 7px;
+            margin-top: 6px;
+        }
+
+    </style>
+
+{% endblock %}
+
+{% block body %}
+
+    <div id="container" class="container">
+        <div id="dashboard-top-spacer">&nbsp;</div>
+
+        <div class="row">
+            <div class="col-md-8">
+                <div class="twothirds_div">
+                    <h1>This is teh users list you want to see.</h1>
+                    <table class="table table-striped table-bordered">
+                        <thead>
+                            <tr>
+                                <th>User ID</th>
+                                <th>Display Name</th>
+                                <th>Tier</th>
+                                <th>Point Balance</th>
+                                <th>Phone</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for item in users %}
+                            <tr class="user-with-phone">
+                                <td class="align-middle"># {{ item.user_id }}</td>
+                                <td class="align-middle"><span class="user-display_name" data-target="#user-location-modal-{{ item.user_id }}" data-toggle="modal">{{ item.display_name }}</span></td>
+                                <td class="align-middle">
+                                    <span>{{ item.tier }}</span>
+                                    <span class="tier-ball tier-ball-small {{ item.tier.lower() }}"></span>
+                                </td>
+                                <td class="align-middle">{{ item.point_balance }}</td>
+                                <td class="align-middle">
+                                    <span class="align-middle">
+                                        {% for phone in item.phone %}
+                                            {{ phone }}<br />
+                                        {% endfor %}
+                                    </span>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+{% endblock %}
+
+{% block modals_block %}
+{% for item in users %}
+<div id="user-location-modal-{{ item.user_id }}" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+    
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">{{ item.display_name }}'s Location</h4>
+            </div>
+        <div class="modal-body">
+            <p class="user-location">{{ item.location or 'Unknown' }}</p>
+        </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    
+    </div>
+</div>
+
+<script>
+    $(document).ready(() => {
+        $("[data-toggle=modal]").modal()
+    })
+</script>
+{% endfor %}
+{% endblock modals_block %}
